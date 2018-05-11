@@ -1,5 +1,14 @@
-
-
+.logo{
+background-image: url(../images/584d82e4367b6a13e54477c1.png);
+background-size: 70%;
+height: 200px;
+background-repeat: no-repeat;
+color: #331d82;
+}
+h1{
+  line-height:10%;
+  margin-left:36px;
+}
 nav ::placeholder {
   color: #999999;
   opacity: 1;
