@@ -1,0 +1,185 @@
+
+
+nav ::placeholder {
+  color: #999999;
+  opacity: 1;
+}
+
+.discover-it ::placeholder{
+  color: #ffffff;
+  opacity: .5;
+}
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  .progress{
+    top: 50%;
+    position: fixed;
+  }
+  .add-artist{
+    width: 75%;
+    padding: 75px 0 0;
+  }
+  div.discover-it{
+    position: fixed;
+    left: 23px;
+    bottom: 23px;
+    padding-top: 15px;
+    margin-bottom: 0;
+    z-index: 997;
+  }
+.tap-target-wave{
+  left:360px !important;
+}
+.tap-target{
+  background: url(../images/Vinyl-PNG-HD-1.png);
+background-size: 100%;
+background-repeat: no-repeat;
+background-position: 30% 0;
+}
+.tap-target-content{
+  padding-top:20px;
+  vertical-align: top !important;
+  color:#ffffff;
+  text-align:right;
+  }
+  .add-artist input[type='text']{
+     color: #ffffff;
+    padding-right: 18px;
+    text-align: right;
+
+  }
+    section {
+      position: relative;
+      margin-left:calc(100% / 4);
+      margin-bottom:200px;
+    }
+    #chip-container{
+      position:fixed;
+      width:calc(100% / 4);
+
+    }
+    .sort .chip {
+        font-size: 18px;
+    }
+    nav .input-field input:not([type]), nav .input-field input[type=text]:not(.browser-default) {
+      font-size:24px
+    }
+    nav{
+      background-color: rgba(217, 251, 237,1);
+      padding-bottom: 84px;
+    }
+    .navbar-fixed{
+      margin: 0 0 36px 0;
+    }
+    .hide{
+      display:none;
+    }
+    html::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: -99;
+      background: linear-gradient(to bottom, #d1ffef 0%, #ffe0d1 100%);
+      opacity: .95;
+    }
+    html{
+      font-size: 12px;
+      font-family:"Lucida Console", Monaco, monospace	;
+      background: url(../images/858316078.jpg) top center fixed / 66%;
+      padding: 0 0 240px;
+    }
+    main{
+      padding: 0 24px;
+    }
+    summary img{
+      width:100%
+    }
+    .modal img{
+      max-height: 350px;
+    }
+
+    main{
+      /* transform: rotate(3deg); */
+    }
+    article{
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      grid-row-gap: 2em;
+      grid-column-gap: 2em;
+    }
+    summary{
+    animation: fadein 3s;
+      padding:12px;
+      background-color: rgba(206, 186, 229, 0.5);
+      border:1px solid #cccc;
+      box-shadow: 0 46px 53px -34px rgba(0,0,0,.18);
+    }
+    section, .modal {
+      text-align:center;
+      padding:12px 24px;
+      outline: 0 !important;
+    }
+    #chips div, summary div{
+      margin:6px
+    }
+    .chip:focus{
+      background-color:rgba(228, 228, 228, .8);
+      color:rgba(38, 166, 154, 1);
+      background-color:unset;
+    }
+    h6, .like-it, .add-it{
+      text-align:center;
+    }
+    ul{
+      clear:both;
+    }
+    .like, summary:not(.temp) .image, .chip, .modal i,.add-it{
+      cursor:pointer
+    }
+    summary.temp a{
+      cursor:default
+    }
+    .year,.likes{
+      font-size:12px
+    }
+    .albums-header{
+      text-transform:uppercase;
+      font-size:12px;
+    }
+    .modal i{
+      position: relative;
+      top: 200px;
+      z-index: 999;
+      width:49%
+    }
+    .chevron-left{
+      text-align:left;
+    }
+    .chevron-right{
+      text-align:right;
+    }
+    .modal h6{
+      text-transform:uppercase;
+    }
+    .selected{
+      background-color:#26a69a;
+      color: yellow;
+    }
+    nav .material-icons.prefix{
+      color:#26a69a;
+    }
+    .tap-target-wrapper.open .tap-target-wave::after {
+      -webkit-animation:none;
+      -moz-animation:none;
+      animation:none
+    }
+    .chip .material-icons{
+      font-size:15px;
+    }
