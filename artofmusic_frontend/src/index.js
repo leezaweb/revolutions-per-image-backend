@@ -1,5 +1,4 @@
 let search = false;
-let instance;
 let liked;
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -7,10 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
   liked = [];
 
   Album.deleteIt();
-  M.Modal.init(document.querySelectorAll('.modal'), {
-    opacity: 0.5,
-    inDuration: 600
-  });
   M.Autocomplete.init(document.querySelectorAll('.autocomplete'), {});
 
   Genre.renderChips();
@@ -26,16 +21,17 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById("addForm").addEventListener('submit', searchArtist.bind(this));
   document.querySelector("article").addEventListener('click', clickIt.bind(this));
 
-  instance = M.TapTarget.init(document.querySelectorAll('.tap-target'))[0];
-  document.querySelector(".discover-it").addEventListener('click', discoverIt.bind(this, instance));
+  let tapInstance = M.TapTarget.init(document.querySelectorAll('.tap-target'))[0];
+  document.querySelector(".discover-it").addEventListener('click', discoverIt.bind(this, tapInstance));
+
+  let modalInstance = M.Modal.init(document.querySelectorAll('.modal'));
+  console.log(modalInstance)
+  document.querySelector(".chevron-left").style.visibility = "hidden";
+  document.querySelector(".chevron-right").style.visibility = "hidden";
   document.querySelector("main").addEventListener('click', function(e) {
-    instance.close();
+    tapInstance.close();
     search = false;
   });
-
-
-
-
 });
 
 let token = "QjkhoqmubxdAFOTXhcXCnhdQzozszdFQOjFVltZN";
@@ -44,7 +40,7 @@ var selected = [];
 
 function searchArtist(e) {
   e.preventDefault();
-  instance.close();
+  tapInstance.close();
   scrollToTop();
   search = false;
   Album.fetched = [];
@@ -106,7 +102,6 @@ function makeTempAlbum(album) {
   let artistObj = new VisualArtist(null, artist.name);
 
   genreObjs = genres.map(genre => {
-    // debugger;
     return new Genre(
       null,
       genre
@@ -170,18 +165,18 @@ function clickSort(e) {
   }
 }
 
-function discoverIt(instance, e) {
+function discoverIt(tapInstance, e) {
   if (e.target.className.includes("discovery")) {
-    toggleDiscovery(instance);
+    toggleDiscovery(tapInstance);
   }
 }
 
-function toggleDiscovery(instance) {
+function toggleDiscovery(tapInstance) {
   if (search === false) {
-    instance.open();
+    tapInstance.open();
     search = true;
   } else {
-    instance.close();
+    tapInstance.close();
     search = false;
   }
   document.querySelectorAll(".pulse").forEach(pulse => pulse.classList.toggle("pulse"));
@@ -192,6 +187,7 @@ function clickIt(e) {
     let src = e.target.src;
     let vaId = e.target.dataset.artist;
     let albumId = e.target.dataset.id;
+
     VisualArtist.domDetail(albumId, vaId, src);
 
   } else if (e.target.className.includes('heart')) {
@@ -250,27 +246,36 @@ function clickChip(e) {
   }
 }
 
-function navigate(e, id) {
-  let currentIndex = Album.page.indexOf(Album.page.find(album => {
-    return album.id === parseInt(id);
-  }));
+function navigate(e, index) {
+  let currentIndex = index;
   let nextIndex = ++currentIndex;
   let previousIndex = --currentIndex;
   if (e.key === "ArrowRight" || e.target.className.includes("chevron-right")) {
-    currentIndex = nextIndex;
-    VisualArtist.domDetail(Album.page[nextIndex].id);
+    currentIndex++;
+    console.log(currentIndex);
+    if (checkIndex(currentIndex) ){VisualArtist.domDetail(Album.page[currentIndex].id);}
   } else if (e.key === "ArrowLeft" || e.target.className.includes("chevron-left")) {
-    currentIndex = --previousIndex;
-    VisualArtist.domDetail(Album.page[previousIndex].id);
+    currentIndex--;
+    console.log(currentIndex);
+    if (checkIndex(currentIndex)){VisualArtist.domDetail(Album.page[currentIndex].id);}
+  } else if (e.target.className.includes("close")) {
+    document.querySelector(".modal").style.display = "none";
+    document.querySelector(".modal-overlay").style.display = "none";
+    modalInstance.close();
   }
 }
+
+function checkIndex(index){
+  if (index > -1 && index < 20){ return true;}
+}
+
 
 var timeOut;
 
 function scrollToTop() {
-  if (document.body.scrollTop != 0 || document.documentElement.scrollTop != 0) {
+  if (document.body.scrollTop !== 0 || document.documentElement.scrollTop !== 0) {
     window.scrollBy(0, -(window.innerHeight / 3));
-    timeOut = setTimeout('scrollToTop()', 6);
+    timeOut = setTimeout(scrollToTop(), 6);
   } else clearTimeout(timeOut);
 }
 

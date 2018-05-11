@@ -26,7 +26,7 @@ class Album {
     let likeHTML = (!clicked) ? `<span class="heart" data-id="${this.id}" class="like">💜</span>like it` : ``;
     return `<summary class="perm">
           <h6 class="visual-artist">${this.visual_artist.name}</h6>
-          <div class="image-container"><a class="tooltipped" data-position="top" data-tooltip="${this.artist} - ${this.title}"><img src='${this.image}' class="image modal-trigger" data-id="${this.id}" data-artist="${this.visual_artist.id}" data-target="modal1" ></a></div>
+          <div class="image-container"><a class="tooltipped" data-position="top" data-tooltip="${this.artist} - ${this.title} (${this.year})"><img src='${this.image}' class="image modal-trigger" data-id="${this.id}" data-artist="${this.visual_artist.id}" data-target="modal1" ></a></div>
           <!--<div class="artist">${this.artist}</div>
           <div class="title">${this.title}</div>
           <div class="year">${this.year}</div>

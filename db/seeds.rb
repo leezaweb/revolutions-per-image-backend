@@ -139,7 +139,7 @@ end
 
 
 
-308.downto(1) do |count|
+302.downto(1) do |count|
   current_page = RestClient.get("https://api.discogs.com/labels/651/releases?page=#{count}&token=QjkhoqmubxdAFOTXhcXCnhdQzozszdFQOjFVltZN")
   puts "%%%%%%%#{count}#{JSON.parse(current_page)["pagination"]}%%%%%%%%%%%%%"
   parse_page(current_page)

@@ -1,21 +1,22 @@
 .logo {
   background-image: url(../images/584d82e4367b6a13e54477c1.png);
   background-size: 70%;
-  height: 200px;
+  height: 150px;
   background-repeat: no-repeat;
-  background-position: 0 21px;
+  background-position: 0 15px;
 }
 
-element.style {}
-
 h1 {
-  line-height: 10%;
-  margin-left: 36px;
-  color: #4dd32e;
-  font-size: 4.7em;
+  line-height: 20%;
+  margin-left: 15px;
   margin-right: 0;
-  text-shadow: 6px 6px 0px rgba(0, 0, 0, 0.75);
+  text-shadow: 6px 6px 0px rgba(0, 0, 0, 0.6);
   white-space: nowrap;
+}
+h1 a {
+  color: rgba(234, 125, 241, 1);
+  text-transform: uppercase;
+  font-size: 4rem;
 }
 
 nav ::placeholder {
@@ -91,7 +92,9 @@ section {
   width: calc(100% / 4);
   z-index: 997;
 }
-
+.chip{
+  background-color: rgba(234, 125, 241, .2)
+}
 #sort .chip {
   font-size: 18px;
 }
@@ -134,7 +137,7 @@ html {
   font-family: "Lucida Console", Monaco, monospace;
   font-family: "Arial Black", Gadget, sans-serif;
   color: #444444;
-  background: url(../images/858316078.jpg) top center fixed / 66%;
+  /* background: url(../images/858316078.jpg) top center fixed / 66%; */
   padding: 0 0 240px;
 }
 
@@ -148,10 +151,6 @@ summary img {
 
 .modal img {
   max-height: 350px;
-}
-
-main {
-  /* transform: rotate(3deg); */
 }
 
 article {
@@ -187,6 +186,8 @@ summary {
 .chip:not(.year-sort):not(.like-sort):not(.refresh-sort):focus {
   background-color: rgba(228, 228, 228, .8);
   color: #4dd32e;
+}
+.chip:not(.year-sort):not(.like-sort):not(.refresh-sort):focus, .chip:hover{
   background-color: unset;
 }
 
@@ -216,17 +217,31 @@ summary.temp a, #sort .chip:focus {
 }
 
 .modal {
-  max-height: 100%;
-  outline: none;
+    outline: none;
+    max-width: 100%;
+    max-height: 100%;
+    width: calc(100% / 3 * 2);
+    height: 100%;
+    top: 0 !important;
+    margin: 0 0 0 calc(100% / 3);
+    padding: 50px 0;
 }
 
-.modal i {
-  position: relative;
-  top: 200px;
+.navigate i {
   z-index: 999;
   width: 49%
 }
-
+.navigate{
+  position: fixed;
+  top: 50%;
+  width: 100%;
+}
+.close{
+  position: absolute;
+  right: 36px;
+  top: 36px;
+  color:#4dd32e;
+}
 .chevron-left {
   text-align: left;
 }
