@@ -253,11 +253,15 @@ function navigate(e, index) {
   if (e.key === "ArrowRight" || e.target.className.includes("chevron-right")) {
     currentIndex++;
     console.log(currentIndex);
-    if (checkIndex(currentIndex) ){VisualArtist.domDetail(Album.page[currentIndex].id);}
+    if (checkIndex(currentIndex)) {
+      VisualArtist.domDetail(Album.page[currentIndex].id);
+    }
   } else if (e.key === "ArrowLeft" || e.target.className.includes("chevron-left")) {
     currentIndex--;
     console.log(currentIndex);
-    if (checkIndex(currentIndex)){VisualArtist.domDetail(Album.page[currentIndex].id);}
+    if (checkIndex(currentIndex)) {
+      VisualArtist.domDetail(Album.page[currentIndex].id);
+    }
   } else if (e.target.className.includes("close")) {
     document.querySelector(".modal").style.display = "none";
     document.querySelector(".modal-overlay").style.display = "none";
@@ -265,8 +269,10 @@ function navigate(e, index) {
   }
 }
 
-function checkIndex(index){
-  if (index > -1 && index < 20){ return true;}
+function checkIndex(index) {
+  if (index > -1 && index < 20) {
+    return true;
+  }
 }
 
 

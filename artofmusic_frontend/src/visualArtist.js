@@ -44,20 +44,20 @@ VisualArtist.domDetail = (albumId, vaId, src) => {
 ${thisArtist.detail()}
 <ul>`;
 
-let currentIndex = Album.page.indexOf(Album.page.find(album => {
-  return album.id === parseInt(albumId);
-}));
-if (currentIndex === 19){
-  document.querySelector(".chevron-left").style.visibility = "visible";
-  document.querySelector(".chevron-right").style.visibility = "hidden";
-} else if (currentIndex === 0){
-  console.log("yes");
-  document.querySelector(".chevron-left").style.visibility = "hidden";
-  document.querySelector(".chevron-right").style.visibility = "visible";
-} else{
-  document.querySelector(".chevron-left").style.visibility = "visible";
-  document.querySelector(".chevron-right").style.visibility = "visible";
-}
+  let currentIndex = Album.page.indexOf(Album.page.find(album => {
+    return album.id === parseInt(albumId);
+  }));
+  if (currentIndex === 19) {
+    document.querySelector(".chevron-left").style.visibility = "visible";
+    document.querySelector(".chevron-right").style.visibility = "hidden";
+  } else if (currentIndex === 0) {
+    console.log("yes");
+    document.querySelector(".chevron-left").style.visibility = "hidden";
+    document.querySelector(".chevron-right").style.visibility = "visible";
+  } else {
+    document.querySelector(".chevron-left").style.visibility = "visible";
+    document.querySelector(".chevron-right").style.visibility = "visible";
+  }
 
   document.querySelector("#modal1 .container").innerHTML = modalContent;
   document.body.addEventListener('keydown', function(e) {
