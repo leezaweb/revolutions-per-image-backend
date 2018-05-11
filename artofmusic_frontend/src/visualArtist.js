@@ -34,7 +34,6 @@ VisualArtist.domDetail = (albumId, vaId, src) => {
     thisAlbum.visual_artist.profile,
     thisAlbum.visual_artist.albums
   );
-  debugger;
   let thisSrc = src || thisAlbum.image;
   let bio = thisArtist.profile.length ? `<h5>Biography</h5><p>${thisArtist.profile}</p>` : "";
   let modalContent = `<h6>${thisArtist.name}</h6>

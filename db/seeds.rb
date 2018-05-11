@@ -19,7 +19,7 @@ def parse_page(current_page)
 
   page_albums = page_json.map do |album_url|
     current_album = RestClient.get("#{album_url}?token=QjkhoqmubxdAFOTXhcXCnhdQzozszdFQOjFVltZN")
-    sleep(2)
+    sleep(1)
     JSON.parse(current_album)
   end
   # binding.pry
@@ -136,38 +136,40 @@ end
 #   parse_page(current_page)
 # end
 
-180.times do |count|
-  current_page = RestClient.get("https://api.discogs.com/labels/238322/releases?page=#{count}&token=QjkhoqmubxdAFOTXhcXCnhdQzozszdFQOjFVltZN")
-  puts "%%%%%%%#{count}#{JSON.parse(current_page)["pagination"]}%%%%%%%%%%%%%"
-  parse_page(current_page)
-end
 
-626.times do |count|
+
+
+348.downto(1) do |count|
   current_page = RestClient.get("https://api.discogs.com/labels/651/releases?page=#{count}&token=QjkhoqmubxdAFOTXhcXCnhdQzozszdFQOjFVltZN")
   puts "%%%%%%%#{count}#{JSON.parse(current_page)["pagination"]}%%%%%%%%%%%%%"
   parse_page(current_page)
 end
 
-1556.times do |count|
-  current_page = RestClient.get("https://api.discogs.com/labels/681/releases?page=#{count}&token=QjkhoqmubxdAFOTXhcXCnhdQzozszdFQOjFVltZN")
-  puts "%%%%%%%#{count}#{JSON.parse(current_page)["pagination"]}%%%%%%%%%%%%%"
-  parse_page(current_page)
-end
 
-1590.times do |count|
-  current_page = RestClient.get("https://api.discogs.com/labels/11358/releases?page=#{count}&token=QjkhoqmubxdAFOTXhcXCnhdQzozszdFQOjFVltZN")
-  puts "%%%%%%%#{count}#{JSON.parse(current_page)["pagination"]}%%%%%%%%%%%%%"
-  parse_page(current_page)
-end
+# 1590.downto(1) do |count|
+#   current_page = RestClient.get("https://api.discogs.com/labels/11358/releases?page=#{count}&token=QjkhoqmubxdAFOTXhcXCnhdQzozszdFQOjFVltZN")
+#   puts "%%%%%%%#{count}#{JSON.parse(current_page)["pagination"]}%%%%%%%%%%%%%"
+#   parse_page(current_page)
+# end
 
-2485.times do |count|
+2485.downto(1) do |count|
   current_page = RestClient.get("https://api.discogs.com/labels/1610/releases?page=#{count}&token=QjkhoqmubxdAFOTXhcXCnhdQzozszdFQOjFVltZN")
   puts "%%%%%%%#{count}#{JSON.parse(current_page)["pagination"]}%%%%%%%%%%%%%"
   parse_page(current_page)
 end
 
 
+1556.downto(1) do |count|
+  current_page = RestClient.get("https://api.discogs.com/labels/681/releases?page=#{count}&token=QjkhoqmubxdAFOTXhcXCnhdQzozszdFQOjFVltZN")
+  puts "%%%%%%%#{count}#{JSON.parse(current_page)["pagination"]}%%%%%%%%%%%%%"
+  parse_page(current_page)
+end
 
+153.downto(10) do |count|
+  current_page = RestClient.get("https://api.discogs.com/labels/238322/releases?page=#{count}&token=QjkhoqmubxdAFOTXhcXCnhdQzozszdFQOjFVltZN")
+  puts "%%%%%%%#{count}#{JSON.parse(current_page)["pagination"]}%%%%%%%%%%%%%"
+  parse_page(current_page)
+end
 
 
 2452.downto(1200) do |count|

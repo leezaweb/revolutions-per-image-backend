@@ -9,7 +9,7 @@ class Album {
     this.likes = likes;
     this.visual_artist = visual_artist;
     this.genres = genres;
-
+    Album.fetched.push(this);
     Album.concat.push(Object.assign({}, {
       'id': this.id,
       'body': `${this.artist}
@@ -34,12 +34,13 @@ class Album {
 
 
 tempRender() {
+  let genres = this.genres.map(genre=>genre.name).join(',');
   return `<summary class="temp">
         <h6 class="visual-artist">${this.visual_artist.name}</h6>
-        <div class="image-container"><a class="tooltipped" data-position="top" data-tooltip="${this.artist} - ${this.title} (${this.year})"><img src='${this.image}' class="image" data-id="" data-target="modal1" ></a></div>
+        <div class="image-container"><a class="tooltipped" data-position="top" data-tooltip="${this.artist} - ${this.title} (${this.year})"><img src='${this.image}' class="image" data-target="modal1" ></a></div>
         <div class="like-it"><span class="likes">${parseInt(this.likes)}</span> likes</div>
         <div class="add-it">
-        <button class="btn" type="submit" name="action">add art
+        <button class="btn" type="submit" name="action" data-artist="${this.artist}" data-title="${this.title}" data-year="${this.year}" data-artist-name="${this.visual_artist.name}" data-artist-profile="${this.visual_artist.profile}" data-image="${this.image}" data-genres="${genres}" data-likes="${this.likes}" data-rating="${this.rating}">add art
             <i class="material-icons right">add</i>
         </button>
         </div>
@@ -47,7 +48,7 @@ tempRender() {
     }
 
 }
-
+Album.fetched = [];
 Album.page = [];
 Album.concat = [];
 Album.updateLikes = (id) => {
@@ -63,7 +64,6 @@ Album.updateLikes = (id) => {
 };
 
 Album.makeAlbum = (album) => {
-  // debugger;
   return new Album(
     album.id,
     album.artist,

@@ -30,7 +30,9 @@ Genre.filterAlbums = (clicked) => {
         filteredAlbums.push(Album.makeAlbum(album));
       });
     });
+    Album.page = filteredAlbums;
     reRender(filteredAlbums);
+    scrollToTop();
     document.querySelector(".progress").style.display = "none";
   });
 };

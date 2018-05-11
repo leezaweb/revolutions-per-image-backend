@@ -1,4 +1,5 @@
 let search = false;
+let instance
 document.addEventListener('DOMContentLoaded', () => {
   Album.deleteIt();
   M.Modal.init(document.querySelectorAll('.modal'), {
@@ -6,7 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
     inDuration: 600
   });
   M.Autocomplete.init(document.querySelectorAll('.autocomplete'), {});
-  let instance = M.TapTarget.init(document.querySelectorAll('.tap-target'))[0];
 
   Genre.renderChips();
   VisualArtist.renderArtists();
@@ -22,6 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelector("article").addEventListener('click', clickIt.bind(this));
   document.querySelector("article").addEventListener('click', likeIt.bind(this));
   document.querySelector("article").addEventListener('click', addIt.bind(this));
+
+  instance = M.TapTarget.init(document.querySelectorAll('.tap-target'))[0];
   document.querySelector(".discover-it").addEventListener('click', discoverIt.bind(this, instance));
   document.querySelector("main").addEventListener('click',function(e){
     instance.close();
@@ -31,71 +33,108 @@ document.addEventListener('DOMContentLoaded', () => {
 
 let token = "QjkhoqmubxdAFOTXhcXCnhdQzozszdFQOjFVltZN";
 let count = 0;
+var selected = [];
 
 function searchArtist(e){
   e.preventDefault();
+  instance.close();
+  search = false;
+  Album.fetched = [];
   document.querySelector("article").innerHTML = "";
   let query = document.getElementById("add").value.toLowerCase();
-  fetch(`https://api.discogs.com/database/search?q=${query}&?credit&token=${token}`)
+
+  let promise = fetch(`https://api.discogs.com/database/search?q=${query}&page=1&credit&token=${token}`)
+  // json.pagination.pages
+
   .then(resp=>resp.json())
   .then(json=>{
-    let selected = [];
-
-    json.results.slice(0,25).filter(result=>{
-      if (result.resource_url.includes("releases")){
-        fetcher(result.resource_url).then(album=>{
+    document.querySelector(".progress").style.display = "block";
+    let promises = json.results.slice(0,25).filter(result=>{
+        return result.resource_url.includes("releases");
+    }).map(result=>{
+        let fetched = fetcher(result.resource_url).then(album=>{
           if(album!==undefined){
-          let artist = album.extraartists.find(ea=>{
-            return ea.role.match(/\b(Cover|Painting|Artwork|Illustration|Drawing)\b/gi);
-          });
-
-          let genres = [];
-
-          if (album.genres)album.genres.forEach(genre=>genres.push(genre));
-          if (album.styles)album.styles.forEach(genre=>genres.push(genre));
-
-          let artistObj = new VisualArtist(null,artist.name);
-
-          genreObjs = genres.map(genre=>{
-            new Genre(
-              null,
-              genre.name
-            );
-          });
-
-          selected.push(new Album(
-            null,
-            album.artists_sort,
-            album.title,
-            album.images[0].uri,
-            album.year,
-            album.community.rating.average,
-            album.community.rating.count,
-            artistObj,
-            genreObjs
-          ));
-          return selected;
+            return makeTempAlbum(album);
             }
-        }).then(selectedVal=>{
-          // console.log(selectedVal.length);
-          selected.forEach(album=>{
-            document.querySelector("article").innerHTML += album.tempRender();
-            document.querySelector(".pager").style.display = "none";
-          });
-
         });
-      }
+      return fetched;
     });
+    return Promise.all(promises).then(function(values){return values;});
   });
+    Promise.resolve(promise).then(function(values) {
+
+      document.querySelector(".progress").style.display = "none";
+      let selected = values.filter(v=> v!==undefined);
+      tempAdd(selected);
+    });
+
   document.getElementById("addForm").reset();
+
+}
+
+
+function tempAdd(selected){
+  selected.forEach(album=>{
+    document.querySelector("article").innerHTML += album.tempRender();
+    document.querySelector(".pager").style.display = "none";
+  });
+
+}
+
+
+
+function makeTempAlbum(album){
+  let artist = album.extraartists.find(ea=>{
+    return ea.role.match(/\b(Cover|Painting|Artwork|Illustration|Drawing)\b/gi);
+  });
+
+  let genres = [];
+
+  if (album.genres)album.genres.forEach(genre=>genres.push(genre));
+  if (album.styles)album.styles.forEach(genre=>genres.push(genre));
+
+  let artistObj = new VisualArtist(null,artist.name);
+
+  genreObjs = genres.map(genre=>{
+    // debugger;
+    return new Genre(
+      null,
+      genre
+    );
+  });
+
+  return new Album(
+    null,
+    album.artists_sort,
+    album.title,
+    album.images[0].uri,
+    album.year,
+    album.community.rating.average,
+    album.community.rating.count,
+    artistObj,
+    genreObjs
+  );
 }
 
 
 
 
-
 function fetcher(result){
+  var fetched =  fetchAlbum(result);
+  // debugger;
+  return fetched;
+
+}
+
+// async function fetcher(result){
+//   var fetched = await fetchAlbum(result);
+//   // debugger;
+//   return fetched;
+// }
+
+function fetchAlbum(result){
   let counter = 0;
+  // setTimeout(() => {
   return fetch (`${result}?token=${token}`).then(resp=>resp.json()).then(json=>{
       counter = json.extraartists.filter(va=>{
         return va.role.match(/\b(Cover|Painting|Artwork|Illustration|Drawing)\b/gi);
@@ -104,7 +143,10 @@ function fetcher(result){
         return json;
       }
     });
+  // }, 2000);
+
 }
+
 
 
 function clickSort(e) {
@@ -153,21 +195,34 @@ function likeIt(e) {
 
 function addIt(e) {
   if (e.target.parentElement.className.includes('add')) {
-    let data = ""
-    fetch("http://localhost:3000/api/v1/albums",{
+    let data = {
+      artist: e.target.dataset.artist,
+      title: e.target.dataset.title,
+      image: e.target.dataset.image,
+      year: e.target.dataset.year,
+      rating: e.target.dataset.rating,
+      likes: e.target.dataset.likes,
+      visual_artist: e.target.dataset.artistName,
+      genres: e.target.dataset.genres
+    };
+
+    let promise = fetch("http://localhost:3000/api/v1/albums",{
       body: JSON.stringify(data),
       method:"POST",
       headers: {
       'user-agent': 'Mozilla/4.0 MDN Example',
       'content-type': 'application/json'
-    }}).then(resp=>resp.json()).then(json=>{
-      debugger;
+    }});
+
+    Promise.resolve(promise).then(function(){
+      VisualArtist.filterAlbums(e.target.dataset.artistName);
+
     });
   }
 }
 
 function clickChip(e) {
-  if (e.target.className.includes('chip') && e.target.id !== "chips") {
+  if (e.target.className.includes('chip') && e.target.id !== "chips" && !e.target.className.includes('sort')) {
     document.querySelectorAll("#sort .selected").forEach(chip=>chip.classList.remove("selected"));
     e.target.classList.toggle("selected");
     let clicked = [...document.querySelectorAll(".selected")].map(chip => {
@@ -177,6 +232,7 @@ function clickChip(e) {
     if (clicked.length == 0) {
       reRender();
     } else {
+      // debugger;
       Genre.filterAlbums(clicked);
     }
   }
@@ -195,6 +251,15 @@ function navigate(e, id) {
     currentIndex = --previousIndex;
     VisualArtist.domDetail(Album.page[previousIndex].id);
   }
+}
+
+var timeOut;
+function scrollToTop() {
+	// if (document.body.scrollTop!=0 || document.documentElement.scrollTop!=0){
+	// 	window.scrollBy(0,-(window.innerHeight/3));
+	// 	timeOut=setTimeout('scrollToTop()',6);
+	// }
+	// else clearTimeout(timeOut);
 }
 
 function reRender(arg) {
@@ -222,10 +287,11 @@ function reRender(arg) {
       });
       updateDom(theseAlbums);
       addPager(arg);
-
+        scrollToTop();
     });
   } else if (typeof arg === "string") {
     document.querySelector(".progress").style.display = "block";
+    // debugger;
     fetch(`http://localhost:3000/api/v1/albums/?sort=${arg}`).then(resp => resp.json()).then(json => {
       let theseAlbums = json.map(album => {
         return Album.makeAlbum(album);
@@ -235,8 +301,6 @@ function reRender(arg) {
 
   }
 
-  document.body.scrollTop = 0; // For Safari
-  document.documentElement.scrollTop = 0;
 }
 
 function updateDom(theseAlbums) {

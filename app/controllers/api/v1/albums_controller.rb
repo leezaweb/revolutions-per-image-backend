@@ -1,7 +1,4 @@
   class Api::V1::AlbumsController < ApplicationController
-    def create
-      puts "@@@@@@@@@@@#{params}"
-    end
 
     def index
       offset = params[:page] == "undefined" ? 0 : params[:page].to_i
@@ -12,8 +9,10 @@
       order = "DESC" if sort == "likes"
       order = "ASC" if sort == "year"
       puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%#{offset}"
+      # byebug
       render json: Album.order("#{sort} #{order}").limit(limit).offset(offset*limit)
     end
+
     def update
       @album = Album.find(params[:id])
       @album.likes+=1
@@ -31,8 +30,29 @@
       Album.find(params[:id]).destroy
     end
 
+    def create
+      va = VisualArtist.find_or_create_by(name: params[:visual_artist])
+      album = Album.find_or_create_by(
+        artist: params[:artist],
+        title: params[:title],
+        year: params[:year]
+      )
+
+      genreParams = params[:genres].split(",")
+      genres = genreParams.map{|x|
+        Genre.find_or_create_by(name:x)
+      }
+      album.visual_artist = va
+      album.rating = params[:ratings]
+      album.image = params[:image]
+      album.likes = params[:likes]
+      album.genres = genres
+      album.save
+
+    end
+
     def search
       name = params[:name].titleize
-      render json: Album.where("title LIKE ?", "%#{name}%").or(Album.where("artist LIKE ?", "%#{name}%")).to_json(include: [visual_artist: {include: :albums}])
+      render json: Album.where("title ILIKE ?", "%#{name}%").or(Album.where("artist LIKE ?", "%#{name}%")).to_json(include: [visual_artist: {include: :albums}])
     end
   end

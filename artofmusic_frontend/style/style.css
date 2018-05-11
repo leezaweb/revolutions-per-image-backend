@@ -62,7 +62,7 @@ background-position: 30% 0;
       width:calc(100% / 4);
 
     }
-    .sort .chip {
+    #sort .chip {
         font-size: 18px;
     }
     nav .input-field input:not([type]), nav .input-field input[type=text]:not(.browser-default) {
@@ -92,6 +92,8 @@ background-position: 30% 0;
     html{
       font-size: 12px;
       font-family:"Lucida Console", Monaco, monospace	;
+      font-family:"Arial Black", Gadget, sans-serif	;
+      color:#444444;
       background: url(../images/858316078.jpg) top center fixed / 66%;
       padding: 0 0 240px;
     }
@@ -115,26 +117,22 @@ background-position: 30% 0;
       grid-column-gap: 2em;
     }
     summary{
-    animation: fadein 3s;
+      animation: fadein 3s;
       padding:12px;
-      background-color: rgba(206, 186, 229, 0.5);
+      background-color: rgba(2255, 255, 0, 0.3);
       border:1px solid #cccc;
       box-shadow: 0 46px 53px -34px rgba(0,0,0,.18);
     }
-    section, .modal {
-      text-align:center;
-      padding:12px 24px;
-      outline: 0 !important;
-    }
+
     #chips div, summary div{
       margin:6px
     }
-    .chip:focus{
+    .chip:not(.year-sort):not(.like-sort):focus{
       background-color:rgba(228, 228, 228, .8);
       color:rgba(38, 166, 154, 1);
       background-color:unset;
     }
-    h6, .like-it, .add-it{
+    h6, .like-it, .add-it, section, .modal{
       text-align:center;
     }
     ul{
@@ -143,7 +141,7 @@ background-position: 30% 0;
     .like, summary:not(.temp) .image, .chip, .modal i,.add-it{
       cursor:pointer
     }
-    summary.temp a{
+    summary.temp a, #sort .chip:focus{
       cursor:default
     }
     .year,.likes{
@@ -152,6 +150,10 @@ background-position: 30% 0;
     .albums-header{
       text-transform:uppercase;
       font-size:12px;
+    }
+    .modal{
+     max-height: 100%;
+     outline:none;
     }
     .modal i{
       position: relative;
