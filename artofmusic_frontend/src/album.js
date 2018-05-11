@@ -21,6 +21,9 @@ class Album {
   }
 
   render() {
+    // debugger;
+    let clicked = JSON.parse(localStorage.getItem("liked")).includes(this.id.toString());
+    let likeHTML = (!clicked) ? `<span class="heart" data-id="${this.id}" class="like">💜</span>like it` : ``;
     return `<summary class="perm">
           <h6 class="visual-artist">${this.visual_artist.name}</h6>
           <div class="image-container"><a class="tooltipped" data-position="top" data-tooltip="${this.artist} - ${this.title}"><img src='${this.image}' class="image modal-trigger" data-id="${this.id}" data-artist="${this.visual_artist.id}" data-target="modal1" ></a></div>
@@ -28,20 +31,19 @@ class Album {
           <div class="title">${this.title}</div>
           <div class="year">${this.year}</div>
           <div><button class="delete" data-id="${this.id}">delete</button></div>//-->
-          <div class="like-it"><span id="<3" data-id="${this.id}" class="like">❤️</span><span class="likes">${parseInt(this.likes)}</span> likes</div>
+
+          <div class="like-it">${likeHTML}<br><span class="likes">${parseInt(this.likes)}</span> likes</div>
         </summary>`;
   }
-
 
 tempRender() {
   let genres = this.genres.map(genre=>genre.name).join(',');
   return `<summary class="temp">
         <h6 class="visual-artist">${this.visual_artist.name}</h6>
         <div class="image-container"><a class="tooltipped" data-position="top" data-tooltip="${this.artist} - ${this.title} (${this.year})"><img src='${this.image}' class="image" data-target="modal1" ></a></div>
-        <div class="like-it"><span class="likes">${parseInt(this.likes)}</span> likes</div>
         <div class="add-it">
         <button class="btn" type="submit" name="action" data-artist="${this.artist}" data-title="${this.title}" data-year="${this.year}" data-artist-name="${this.visual_artist.name}" data-artist-profile="${this.visual_artist.profile}" data-image="${this.image}" data-genres="${genres}" data-likes="${this.likes}" data-rating="${this.rating}">add art
-            <i class="material-icons right">add</i>
+            <i class="material-icons right">add_box</i>
         </button>
         </div>
       </summary>`;

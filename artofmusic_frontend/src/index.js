@@ -1,6 +1,13 @@
 let search = false;
-let instance
+let instance;
+let liked;
 document.addEventListener('DOMContentLoaded', () => {
+
+  myStorage = window.localStorage;
+  liked = [];
+
+
+
   Album.deleteIt();
   M.Modal.init(document.querySelectorAll('.modal'), {
     opacity: 0.5,
@@ -20,8 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById("filterForm").addEventListener('submit', filterIt.bind(this));
   document.getElementById("addForm").addEventListener('submit', searchArtist.bind(this));
   document.querySelector("article").addEventListener('click', clickIt.bind(this));
-  document.querySelector("article").addEventListener('click', likeIt.bind(this));
-  document.querySelector("article").addEventListener('click', addIt.bind(this));
 
   instance = M.TapTarget.init(document.querySelectorAll('.tap-target'))[0];
   document.querySelector(".discover-it").addEventListener('click', discoverIt.bind(this, instance));
@@ -29,6 +34,10 @@ document.addEventListener('DOMContentLoaded', () => {
     instance.close();
     search = false;
   });
+
+
+
+
 });
 
 let token = "QjkhoqmubxdAFOTXhcXCnhdQzozszdFQOjFVltZN";
@@ -38,6 +47,7 @@ var selected = [];
 function searchArtist(e){
   e.preventDefault();
   instance.close();
+  scrollToTop();
   search = false;
   Album.fetched = [];
   document.querySelector("article").innerHTML = "";
@@ -155,6 +165,8 @@ function clickSort(e) {
     reRender("likes");
   } else if (e.target.className.includes("year-sort")) {
     reRender("year");
+  } else if (e.target.className.includes("refresh-sort")) {
+    reRender();
   }
 }
 
@@ -181,45 +193,44 @@ function clickIt(e) {
     let vaId = e.target.dataset.artist;
     let albumId = e.target.dataset.id;
     VisualArtist.domDetail(albumId, vaId, src);
-  }
+
+  } else if (e.target.className.includes('heart')) {
+      e.target.parentElement.getElementsByClassName("likes")[0].innerHTML++;
+      let id = e.target.dataset.id;
+      liked.push(id);
+      e.target.nextSibling.nextSibling.remove();
+      e.target.nextSibling.remove();
+      e.target.remove();
+
+      myStorage.setItem('liked', JSON.stringify(liked));
+      Album.updateLikes(id);
+  } else if (e.target.parentElement.className.includes('add')) {
+      let data = {
+        artist: e.target.dataset.artist,
+        title: e.target.dataset.title,
+        image: e.target.dataset.image,
+        year: e.target.dataset.year,
+        rating: e.target.dataset.rating,
+        likes: e.target.dataset.likes,
+        visual_artist: e.target.dataset.artistName,
+        genres: e.target.dataset.genres
+      };
+
+      let promise = fetch("http://localhost:3000/api/v1/albums",{
+        body: JSON.stringify(data),
+        method:"POST",
+        headers: {
+        'user-agent': 'Mozilla/4.0 MDN Example',
+        'content-type': 'application/json'
+      }});
+
+      Promise.resolve(promise).then(function(){
+        VisualArtist.filterAlbums(e.target.dataset.artistName);
+
+      });
+    }
 }
 
-function likeIt(e) {
-  if (e.target.className.includes('like')) {
-    e.target.parentElement.getElementsByClassName("likes")[0].innerHTML++;
-    let id = e.target.dataset.id;
-
-    Album.updateLikes(id);
-  }
-}
-
-function addIt(e) {
-  if (e.target.parentElement.className.includes('add')) {
-    let data = {
-      artist: e.target.dataset.artist,
-      title: e.target.dataset.title,
-      image: e.target.dataset.image,
-      year: e.target.dataset.year,
-      rating: e.target.dataset.rating,
-      likes: e.target.dataset.likes,
-      visual_artist: e.target.dataset.artistName,
-      genres: e.target.dataset.genres
-    };
-
-    let promise = fetch("http://localhost:3000/api/v1/albums",{
-      body: JSON.stringify(data),
-      method:"POST",
-      headers: {
-      'user-agent': 'Mozilla/4.0 MDN Example',
-      'content-type': 'application/json'
-    }});
-
-    Promise.resolve(promise).then(function(){
-      VisualArtist.filterAlbums(e.target.dataset.artistName);
-
-    });
-  }
-}
 
 function clickChip(e) {
   if (e.target.className.includes('chip') && e.target.id !== "chips" && !e.target.className.includes('sort')) {

@@ -65,6 +65,9 @@ background-position: 30% 0;
     #sort .chip {
         font-size: 18px;
     }
+    #sort{
+      margin-bottom:18px
+    }
     nav .input-field input:not([type]), nav .input-field input[type=text]:not(.browser-default) {
       font-size:24px
     }
@@ -119,17 +122,26 @@ background-position: 30% 0;
     summary{
       animation: fadein 3s;
       padding:12px;
-      background-color: rgba(2255, 255, 0, 0.3);
       border:1px solid #cccc;
       box-shadow: 0 46px 53px -34px rgba(0,0,0,.18);
     }
 
-    #chips div, summary div{
+    .temp{
+       background-color: rgba(234, 125, 241,.3);
+    }
+    .perm{
+       background-color: rgba(80, 211, 51,.3);
+    }
+
+    #chips div:not(#sort), summary div{
       margin:6px
     }
-    .chip:not(.year-sort):not(.like-sort):focus{
+    .chip:focus {
+    background-color: #4dd32e;
+  }
+    .chip:not(.year-sort):not(.like-sort):not(.refresh-sort):focus{
       background-color:rgba(228, 228, 228, .8);
-      color:rgba(38, 166, 154, 1);
+      color:#4dd32e;
       background-color:unset;
     }
     h6, .like-it, .add-it, section, .modal{
@@ -138,7 +150,7 @@ background-position: 30% 0;
     ul{
       clear:both;
     }
-    .like, summary:not(.temp) .image, .chip, .modal i,.add-it{
+    .heart, summary:not(.temp) .image, .chip, .modal i,.add-it{
       cursor:pointer
     }
     summary.temp a, #sort .chip:focus{
@@ -171,11 +183,15 @@ background-position: 30% 0;
       text-transform:uppercase;
     }
     .selected{
-      background-color:#26a69a;
+      background-color:#4dd32e;
       color: yellow;
     }
     nav .material-icons.prefix{
-      color:#26a69a;
+      color:#4dd32e;
+    }
+    .btn, .btn-floating, .pagination li.active{
+      background-color:#4dd32e;
+
     }
     .tap-target-wrapper.open .tap-target-wave::after {
       -webkit-animation:none;

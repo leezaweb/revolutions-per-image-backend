@@ -2,10 +2,10 @@
 
     def index
       offset = params[:page] == "undefined" ? 0 : params[:page].to_i
-      limit = 18
-      sort = params[:sort] || "id"
+      limit = 20
+      sort = params[:sort] || "rating"
 
-      order = "DESC" if sort == "id"
+      order = "DESC" if sort == "rating"
       order = "DESC" if sort == "likes"
       order = "ASC" if sort == "year"
       puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%#{offset}"
