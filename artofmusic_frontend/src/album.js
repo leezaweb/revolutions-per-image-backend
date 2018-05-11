@@ -36,9 +36,9 @@ class Album {
         </summary>`;
   }
 
-tempRender() {
-  let genres = this.genres.map(genre=>genre.name).join(',');
-  return `<summary class="temp">
+  tempRender() {
+    let genres = this.genres.map(genre => genre.name).join(',');
+    return `<summary class="temp">
         <h6 class="visual-artist">${this.visual_artist.name}</h6>
         <div class="image-container"><a class="tooltipped" data-position="top" data-tooltip="${this.artist} - ${this.title} (${this.year})"><img src='${this.image}' class="image" data-target="modal1" ></a></div>
         <div class="add-it">
@@ -47,7 +47,7 @@ tempRender() {
         </button>
         </div>
       </summary>`;
-    }
+  }
 
 }
 Album.fetched = [];
@@ -105,7 +105,7 @@ Album.searchAlbums = (query) => {
     json.forEach(album => {
       filteredAlbums.push(Album.makeAlbum(album));
     });
-    Album.page = filteredAlbums;//////////////////////////////////
+    Album.page = filteredAlbums; //////////////////////////////////
     reRender(filteredAlbums);
   });
 };

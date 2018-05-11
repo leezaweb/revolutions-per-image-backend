@@ -35,7 +35,8 @@ VisualArtist.domDetail = (albumId, vaId, src) => {
     thisAlbum.visual_artist.albums
   );
   let thisSrc = src || thisAlbum.image;
-  let bio = thisArtist.profile.length ? `<h5>Biography</h5><p>${thisArtist.profile}</p>` : "";
+  let bio = (thisArtist.profile && thisArtist.profile.length) ? `<h5>Biography</h5><p>${thisArtist.profile}</p>` : "";
+
   let modalContent = `<h6>${thisArtist.name}</h6>
   <p><strong>${bio}</p>
 <img src=${thisSrc}>
@@ -62,7 +63,7 @@ VisualArtist.filterAlbums = (query) => {
         filteredAlbums.push(Album.makeAlbum(album));
       });
     });
-    Album.page = filteredAlbums;//////////////////////////////////
+    Album.page = filteredAlbums; //////////////////////////////////
     reRender(filteredAlbums);
   });
 };

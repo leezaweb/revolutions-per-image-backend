@@ -21,7 +21,7 @@ Genre.renderChips = () => {
 
 Genre.filterAlbums = (clicked) => {
 
-    document.querySelector(".progress").style.display = "block";
+  document.querySelector(".progress").style.display = "block";
   let ids = clicked.join(",");
   fetch(`http://localhost:3000/api/v1/genres/filter?ids=${ids}`).then(resp => resp.json()).then(json => {
     let filteredAlbums = [];

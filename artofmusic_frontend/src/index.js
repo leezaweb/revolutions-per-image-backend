@@ -6,8 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
   myStorage = window.localStorage;
   liked = [];
 
-
-
   Album.deleteIt();
   M.Modal.init(document.querySelectorAll('.modal'), {
     opacity: 0.5,
@@ -30,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   instance = M.TapTarget.init(document.querySelectorAll('.tap-target'))[0];
   document.querySelector(".discover-it").addEventListener('click', discoverIt.bind(this, instance));
-  document.querySelector("main").addEventListener('click',function(e){
+  document.querySelector("main").addEventListener('click', function(e) {
     instance.close();
     search = false;
   });
@@ -44,7 +42,7 @@ let token = "QjkhoqmubxdAFOTXhcXCnhdQzozszdFQOjFVltZN";
 let count = 0;
 var selected = [];
 
-function searchArtist(e){
+function searchArtist(e) {
   e.preventDefault();
   instance.close();
   scrollToTop();
@@ -54,37 +52,39 @@ function searchArtist(e){
   let query = document.getElementById("add").value.toLowerCase();
 
   let promise = fetch(`https://api.discogs.com/database/search?q=${query}&page=1&credit&token=${token}`)
-  // json.pagination.pages
+    // json.pagination.pages
 
-  .then(resp=>resp.json())
-  .then(json=>{
-    document.querySelector(".progress").style.display = "block";
-    let promises = json.results.slice(0,25).filter(result=>{
+    .then(resp => resp.json())
+    .then(json => {
+      document.querySelector(".progress").style.display = "block";
+      let promises = json.results.slice(0, 25).filter(result => {
         return result.resource_url.includes("releases");
-    }).map(result=>{
-        let fetched = fetcher(result.resource_url).then(album=>{
-          if(album!==undefined){
+      }).map(result => {
+        let fetched = fetcher(result.resource_url).then(album => {
+          if (album !== undefined) {
             return makeTempAlbum(album);
-            }
+          }
         });
-      return fetched;
+        return fetched;
+      });
+      return Promise.all(promises).then(function(values) {
+        return values;
+      });
     });
-    return Promise.all(promises).then(function(values){return values;});
-  });
-    Promise.resolve(promise).then(function(values) {
+  Promise.resolve(promise).then(function(values) {
 
-      document.querySelector(".progress").style.display = "none";
-      let selected = values.filter(v=> v!==undefined);
-      tempAdd(selected);
-    });
+    document.querySelector(".progress").style.display = "none";
+    let selected = values.filter(v => v !== undefined);
+    tempAdd(selected);
+  });
 
   document.getElementById("addForm").reset();
 
 }
 
 
-function tempAdd(selected){
-  selected.forEach(album=>{
+function tempAdd(selected) {
+  selected.forEach(album => {
     document.querySelector("article").innerHTML += album.tempRender();
     document.querySelector(".pager").style.display = "none";
   });
@@ -93,19 +93,19 @@ function tempAdd(selected){
 
 
 
-function makeTempAlbum(album){
-  let artist = album.extraartists.find(ea=>{
+function makeTempAlbum(album) {
+  let artist = album.extraartists.find(ea => {
     return ea.role.match(/\b(Cover|Painting|Artwork|Illustration|Drawing)\b/gi);
   });
 
   let genres = [];
 
-  if (album.genres)album.genres.forEach(genre=>genres.push(genre));
-  if (album.styles)album.styles.forEach(genre=>genres.push(genre));
+  if (album.genres) album.genres.forEach(genre => genres.push(genre));
+  if (album.styles) album.styles.forEach(genre => genres.push(genre));
 
-  let artistObj = new VisualArtist(null,artist.name);
+  let artistObj = new VisualArtist(null, artist.name);
 
-  genreObjs = genres.map(genre=>{
+  genreObjs = genres.map(genre => {
     // debugger;
     return new Genre(
       null,
@@ -129,8 +129,8 @@ function makeTempAlbum(album){
 
 
 
-function fetcher(result){
-  var fetched =  fetchAlbum(result);
+function fetcher(result) {
+  var fetched = fetchAlbum(result);
   // debugger;
   return fetched;
 
@@ -142,17 +142,17 @@ function fetcher(result){
 //   return fetched;
 // }
 
-function fetchAlbum(result){
+function fetchAlbum(result) {
   let counter = 0;
   // setTimeout(() => {
-  return fetch (`${result}?token=${token}`).then(resp=>resp.json()).then(json=>{
-      counter = json.extraartists.filter(va=>{
-        return va.role.match(/\b(Cover|Painting|Artwork|Illustration|Drawing)\b/gi);
-      }).length;
-      if (counter > 0){
-        return json;
-      }
-    });
+  return fetch(`${result}?token=${token}`).then(resp => resp.json()).then(json => {
+    counter = json.extraartists.filter(va => {
+      return va.role.match(/\b(Cover|Painting|Artwork|Illustration|Drawing)\b/gi);
+    }).length;
+    if (counter > 0) {
+      return json;
+    }
+  });
   // }, 2000);
 
 }
@@ -176,7 +176,7 @@ function discoverIt(instance, e) {
   }
 }
 
-function toggleDiscovery(instance){
+function toggleDiscovery(instance) {
   if (search === false) {
     instance.open();
     search = true;
@@ -184,7 +184,7 @@ function toggleDiscovery(instance){
     instance.close();
     search = false;
   }
-  document.querySelectorAll(".pulse").forEach(pulse=>pulse.classList.toggle("pulse"));
+  document.querySelectorAll(".pulse").forEach(pulse => pulse.classList.toggle("pulse"));
 }
 
 function clickIt(e) {
@@ -195,46 +195,47 @@ function clickIt(e) {
     VisualArtist.domDetail(albumId, vaId, src);
 
   } else if (e.target.className.includes('heart')) {
-      e.target.parentElement.getElementsByClassName("likes")[0].innerHTML++;
-      let id = e.target.dataset.id;
-      liked.push(id);
-      e.target.nextSibling.nextSibling.remove();
-      e.target.nextSibling.remove();
-      e.target.remove();
+    e.target.parentElement.getElementsByClassName("likes")[0].innerHTML++;
+    let id = e.target.dataset.id;
+    liked.push(id);
+    e.target.nextSibling.nextSibling.remove();
+    e.target.nextSibling.remove();
+    e.target.remove();
 
-      myStorage.setItem('liked', JSON.stringify(liked));
-      Album.updateLikes(id);
+    myStorage.setItem('liked', JSON.stringify(liked));
+    Album.updateLikes(id);
   } else if (e.target.parentElement.className.includes('add')) {
-      let data = {
-        artist: e.target.dataset.artist,
-        title: e.target.dataset.title,
-        image: e.target.dataset.image,
-        year: e.target.dataset.year,
-        rating: e.target.dataset.rating,
-        likes: e.target.dataset.likes,
-        visual_artist: e.target.dataset.artistName,
-        genres: e.target.dataset.genres
-      };
+    let data = {
+      artist: e.target.dataset.artist,
+      title: e.target.dataset.title,
+      image: e.target.dataset.image,
+      year: e.target.dataset.year,
+      rating: e.target.dataset.rating,
+      likes: e.target.dataset.likes,
+      visual_artist: e.target.dataset.artistName,
+      genres: e.target.dataset.genres
+    };
 
-      let promise = fetch("http://localhost:3000/api/v1/albums",{
-        body: JSON.stringify(data),
-        method:"POST",
-        headers: {
+    let promise = fetch("http://localhost:3000/api/v1/albums", {
+      body: JSON.stringify(data),
+      method: "POST",
+      headers: {
         'user-agent': 'Mozilla/4.0 MDN Example',
         'content-type': 'application/json'
-      }});
+      }
+    });
 
-      Promise.resolve(promise).then(function(){
-        VisualArtist.filterAlbums(e.target.dataset.artistName);
+    Promise.resolve(promise).then(function() {
+      VisualArtist.filterAlbums(e.target.dataset.artistName);
 
-      });
-    }
+    });
+  }
 }
 
 
 function clickChip(e) {
   if (e.target.className.includes('chip') && e.target.id !== "chips" && !e.target.className.includes('sort')) {
-    document.querySelectorAll("#sort .selected").forEach(chip=>chip.classList.remove("selected"));
+    document.querySelectorAll("#sort .selected").forEach(chip => chip.classList.remove("selected"));
     e.target.classList.toggle("selected");
     let clicked = [...document.querySelectorAll(".selected")].map(chip => {
       return parseInt(chip.dataset.id);
@@ -265,12 +266,12 @@ function navigate(e, id) {
 }
 
 var timeOut;
+
 function scrollToTop() {
-	// if (document.body.scrollTop!=0 || document.documentElement.scrollTop!=0){
-	// 	window.scrollBy(0,-(window.innerHeight/3));
-	// 	timeOut=setTimeout('scrollToTop()',6);
-	// }
-	// else clearTimeout(timeOut);
+  if (document.body.scrollTop != 0 || document.documentElement.scrollTop != 0) {
+    window.scrollBy(0, -(window.innerHeight / 3));
+    timeOut = setTimeout('scrollToTop()', 6);
+  } else clearTimeout(timeOut);
 }
 
 function reRender(arg) {
@@ -290,7 +291,7 @@ function reRender(arg) {
 
     M.Tooltip.init(document.querySelectorAll('.tooltipped'), {});
 
-  } else if (!isNaN( parseInt(arg)) || !arg) {
+  } else if (!isNaN(parseInt(arg)) || !arg) {
     document.querySelector(".progress").style.display = "block";
     fetch(`http://localhost:3000/api/v1/albums/?page=${arg}`).then(resp => resp.json()).then(json => {
       let theseAlbums = json.map(album => {
@@ -298,7 +299,7 @@ function reRender(arg) {
       });
       updateDom(theseAlbums);
       addPager(arg);
-        scrollToTop();
+      scrollToTop();
     });
   } else if (typeof arg === "string") {
     document.querySelector(".progress").style.display = "block";
@@ -332,7 +333,9 @@ function updateDom(theseAlbums) {
 function checkCount() {
   let count = document.querySelectorAll("summary").length;
   if (count === 0) {
-    setTimeout(function(){document.querySelector("article").innerHTML = "no results";},1000);
+    setTimeout(function() {
+      document.querySelector("article").innerHTML = "no results";
+    }, 1000);
 
   }
 }
@@ -378,9 +381,9 @@ function filterIt(e) {
   VisualArtist.filterAlbums(query);
 }
 
-function clearSelected(){
+function clearSelected() {
   document.getElementById("searchForm").reset();
   document.getElementById("filterForm").reset();
 
-  document.querySelectorAll(".selected").forEach(chip=>chip.classList.remove("selected"));
+  document.querySelectorAll(".selected").forEach(chip => chip.classList.remove("selected"));
 }
