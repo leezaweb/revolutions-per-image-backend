@@ -22,7 +22,7 @@
 
     def count
       count = Album.count
-      Album.where("image is NULL").destroy_all
+      # Album.where("image is NULL").destroy_all
       render json: {count:count}
     end
 
@@ -53,6 +53,6 @@
 
     def search
       name = params[:name].titleize
-      render json: Album.where("title ILIKE ?", "%#{name}%").or(Album.where("artist LIKE ?", "%#{name}%")).to_json(include: [visual_artist: {include: :albums}])
+      render json: Album.where("title ILIKE ?", "%#{name}%").or(Album.where("artist ILIKE ?", "%#{name}%")).to_json(include: [visual_artist: {include: :albums}])
     end
   end

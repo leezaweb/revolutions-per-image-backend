@@ -1,22 +1,31 @@
+.preloader-wrapper.big {
+  top: 25%;
+  left: 50%;
+  position: fixed;
+
+  width: 300px;
+  height: 300px;
+}
 .logo {
   background-image: url(../images/584d82e4367b6a13e54477c1.png);
   background-size: 70%;
   height: 150px;
   background-repeat: no-repeat;
-  background-position: 0 15px;
+  background-position: 50% 15px;
 }
 
 h1 {
-  line-height: 20%;
-  margin-left: 15px;
-  margin-right: 0;
+  line-height: 200%;
+  margin: auto auto auto 15px;
   text-shadow: 6px 6px 0px rgba(0, 0, 0, 0.6);
   white-space: nowrap;
+  font-size: 3.6rem;
 }
 h1 a {
   color: rgba(234, 125, 241, 1);
   text-transform: uppercase;
-  font-size: 4rem;
+  display: block;
+  text-align: center;
 }
 
 nav ::placeholder {
@@ -26,7 +35,7 @@ nav ::placeholder {
 
 .discover-it ::placeholder {
   color: #ffffff;
-  opacity: .5;
+  opacity: 0.5;
 }
 
 @keyframes fadein {
@@ -36,11 +45,6 @@ nav ::placeholder {
   to {
     opacity: 1;
   }
-}
-
-.progress {
-  top: 50%;
-  position: fixed;
 }
 
 .add-artist {
@@ -75,7 +79,7 @@ div.discover-it {
   text-align: right;
 }
 
-.add-artist input[type='text'] {
+.add-artist input[type="text"] {
   color: #ffffff;
   padding-right: 18px;
   text-align: right;
@@ -84,27 +88,27 @@ div.discover-it {
 section {
   position: relative;
   margin-left: calc(100% / 4);
-  margin-bottom: 200px;
 }
 
 #chip-container {
   position: fixed;
-  width: calc(100% / 4);
   z-index: 997;
+  margin: 0 0 200px;
 }
-.chip{
-  background-color: rgba(234, 125, 241, .2)
-}
-#sort .chip {
-  font-size: 18px;
+.chip,
+.chip.refresh-sort:focus {
+  color: #555555;
+  height: auto;
+  background-color: rgba(234, 125, 241, 0.2);
 }
 
 #sort {
-  margin-bottom: 18px
+  margin-bottom: 18px;
 }
 
-nav .input-field input:not([type]), nav .input-field input[type=text]:not(.browser-default) {
-  font-size: 24px
+nav .input-field input:not([type]),
+nav .input-field input[type="text"]:not(.browser-default) {
+  font-size: 24px;
 }
 
 nav {
@@ -129,7 +133,7 @@ html::before {
   right: 0;
   z-index: -99;
   background: linear-gradient(to bottom, #d1ffef 0%, #ffe0d1 100%);
-  opacity: .95;
+  opacity: 0.95;
 }
 
 html {
@@ -146,7 +150,7 @@ main {
 }
 
 summary img {
-  width: 100%
+  width: 100%;
 }
 
 .modal img {
@@ -164,34 +168,46 @@ summary {
   animation: fadein 3s;
   padding: 12px;
   border: 1px solid #cccc;
-  box-shadow: 0 46px 53px -34px rgba(0, 0, 0, .18);
+  box-shadow: 0 46px 53px -34px rgba(0, 0, 0, 0.18);
 }
 
 .temp {
-  background-color: rgba(234, 125, 241, .3);
+  background-color: rgba(234, 125, 241, 0.3);
 }
 
 .perm {
-  background-color: rgba(80, 211, 51, .3);
+  background-color: rgba(80, 211, 51, 0.3);
 }
 
-#chips div:not(#sort), summary div {
-  margin: 6px
+#chips .chip,
+summary div {
+  margin: 6px;
 }
 
-.chip:focus {
+#sort .chip {
+  margin: 6px 36px;
+  font-size: 18px;
+}
+
+.chip:not(.refresh-sort):focus {
   background-color: #4dd32e;
 }
 
-.chip:not(.year-sort):not(.like-sort):not(.refresh-sort):focus {
-  background-color: rgba(228, 228, 228, .8);
-  color: #4dd32e;
+.selected.chip:not(.year-sort):not(.like-sort):not(.refresh-sort):focus {
+  background-color: #4dd32e;
+  color: yellow;
 }
-.chip:not(.year-sort):not(.like-sort):not(.refresh-sort):focus, .chip:hover{
+.chip:not(.year-sort):not(.like-sort):not(.refresh-sort):not(.selected):focus,
+.chip:hover {
   background-color: unset;
+  color: #555555;
 }
 
-h6, .like-it, .add-it, section, .modal {
+h6,
+.like-it,
+.add-it,
+section,
+.modal {
   text-align: center;
 }
 
@@ -199,16 +215,22 @@ ul {
   clear: both;
 }
 
-.heart, summary:not(.temp) .image, .chip, .modal i, .add-it {
-  cursor: pointer
+.heart,
+summary:not(.temp) .image,
+.chip,
+.modal i,
+.add-it {
+  cursor: pointer;
 }
 
-summary.temp a, #sort .chip:focus {
-  cursor: default
+summary.temp a,
+#sort .chip:focus {
+  cursor: default;
 }
 
-.year, .likes {
-  font-size: 12px
+.year,
+.likes {
+  font-size: 12px;
 }
 
 .albums-header {
@@ -217,30 +239,30 @@ summary.temp a, #sort .chip:focus {
 }
 
 .modal {
-    outline: none;
-    max-width: 100%;
-    max-height: 100%;
-    width: calc(100% / 3 * 2);
-    height: 100%;
-    top: 0 !important;
-    margin: 0 0 0 calc(100% / 3);
-    padding: 50px 0;
+  outline: none;
+  max-width: 100%;
+  max-height: 100%;
+  width: calc(100% / 3 * 2);
+  height: 100%;
+  top: 0 !important;
+  margin: 0 0 0 calc(100% / 3);
+  padding: 50px 0;
 }
 
 .navigate i {
   z-index: 999;
-  width: 49%
+  width: 49%;
 }
-.navigate{
+.navigate {
   position: fixed;
   top: 50%;
   width: 100%;
 }
-.close{
+.close {
   position: absolute;
   right: 36px;
   top: 36px;
-  color:#4dd32e;
+  color: #4dd32e;
 }
 .chevron-left {
   text-align: left;
@@ -254,7 +276,7 @@ summary.temp a, #sort .chip:focus {
   text-transform: uppercase;
 }
 
-.selected {
+.selected:not(.refresh-sort) {
   background-color: #4dd32e;
   color: yellow;
 }
@@ -263,14 +285,16 @@ nav .material-icons.prefix {
   color: #4dd32e;
 }
 
-.btn, .btn-floating, .pagination li.active {
+.btn,
+.btn-floating,
+.pagination li.active {
   background-color: #4dd32e;
 }
 
 .tap-target-wrapper.open .tap-target-wave::after {
   -webkit-animation: none;
   -moz-animation: none;
-  animation: none
+  animation: none;
 }
 
 .chip .material-icons {
@@ -279,4 +303,17 @@ nav .material-icons.prefix {
 
 nav form {
   margin-top: 12px;
+}
+
+@media only screen and (min-width: 599px) and (max-width: 1000px) {
+  nav {
+    height: 64px;
+    line-height: 64px;
+    height: auto;
+    padding-bottom: unset;
+  }
+  #chip-container {
+    position: relative;
+    margin: 200px 0 0;
+  }
 }

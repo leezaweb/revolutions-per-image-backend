@@ -19,17 +19,17 @@
   <div class="navbar-fixed">
     <nav>
       <div class="row">
-        <div class="col s4 logo">
+        <div class="col l4 s12 logo">
           <h1><a href="">Art of Music</a></h1>
         </div>
-        <form class="col s4" id="searchForm">
+        <form class="col l4 s6" id="searchForm">
           <div class="input-field">
             <i class="material-icons prefix">library_music</i>
             <input id="search" name="search" type="text" placeholder="search by musician or album" />
           </div>
           <input type="submit" value="search" style="display:none" />
         </form>
-        <form class="col s4" id="filterForm">
+        <form class="col l4 s6" id="filterForm">
           <div class="input-field">
             <i class="material-icons prefix">brush</i>
             <input list="filter" name="filter" id="autocomplete-input" class="autocomplete" placeholder="filter by cover artist">
@@ -41,14 +41,11 @@
       </div>
     </nav>
   </div>
-  <div class="progress">
-    <div class="indeterminate">
-    </div>
-  </div>
+
   <main>
     <div class="row">
-      <section class="col s3">
-        <div id="chip-container">
+      <section class="col l3 s12">
+        <div id="chip-container" class="col l3 s12">
           <div id="chips" class="chips-initial input-field">
             <div id="sort">
               <div tabindex="0" class="chip refresh-sort"><i class="material-icons">refresh</i> Reset</div>
@@ -58,9 +55,52 @@
           </div>
         </div>
       </section>
-      <div class="col s1">
+      <div class="col l1 s1">
       </div>
-      <div class="col s8">
+      <div class="col l8 s12">
+        <div class="progress-spinner">
+          <div class="preloader-wrapper big active">
+      <div class="spinner-layer spinner-blue">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+
+      <div class="spinner-layer spinner-red">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+
+      <div class="spinner-layer spinner-yellow">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+
+      <div class="spinner-layer spinner-green">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+    </div>
+        </div>
         <article>
         </article>
         <div class="pager">

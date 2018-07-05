@@ -138,12 +138,12 @@ end
 
 
 
-
-302.downto(1) do |count|
-  current_page = RestClient.get("https://api.discogs.com/labels/651/releases?page=#{count}&token=QjkhoqmubxdAFOTXhcXCnhdQzozszdFQOjFVltZN")
-  puts "%%%%%%%#{count}#{JSON.parse(current_page)["pagination"]}%%%%%%%%%%%%%"
-  parse_page(current_page)
-end
+#
+# 302.downto(1) do |count|
+#   current_page = RestClient.get("https://api.discogs.com/labels/651/releases?page=#{count}&token=QjkhoqmubxdAFOTXhcXCnhdQzozszdFQOjFVltZN")
+#   puts "%%%%%%%#{count}#{JSON.parse(current_page)["pagination"]}%%%%%%%%%%%%%"
+#   parse_page(current_page)
+# end
 
 
 # 1590.downto(1) do |count|
@@ -152,27 +152,73 @@ end
 #   parse_page(current_page)
 # end
 
-2485.downto(1) do |count|
-  current_page = RestClient.get("https://api.discogs.com/labels/1610/releases?page=#{count}&token=QjkhoqmubxdAFOTXhcXCnhdQzozszdFQOjFVltZN")
-  puts "%%%%%%%#{count}#{JSON.parse(current_page)["pagination"]}%%%%%%%%%%%%%"
-  parse_page(current_page)
-end
 
 
-1556.downto(1) do |count|
-  current_page = RestClient.get("https://api.discogs.com/labels/681/releases?page=#{count}&token=QjkhoqmubxdAFOTXhcXCnhdQzozszdFQOjFVltZN")
-  puts "%%%%%%%#{count}#{JSON.parse(current_page)["pagination"]}%%%%%%%%%%%%%"
-  parse_page(current_page)
-end
+# 2.downto(1) do |count|
+#   current_page = RestClient.get("https://api.discogs.com/labels/34315/releases?page=#{count}&token=QjkhoqmubxdAFOTXhcXCnhdQzozszdFQOjFVltZN")
+#   puts "%%%%%%%#{count}#{JSON.parse(current_page)["pagination"]}%%%%%%%%%%%%%"
+#   parse_page(current_page)
+# end
 
-153.downto(10) do |count|
-  current_page = RestClient.get("https://api.discogs.com/labels/238322/releases?page=#{count}&token=QjkhoqmubxdAFOTXhcXCnhdQzozszdFQOjFVltZN")
-  puts "%%%%%%%#{count}#{JSON.parse(current_page)["pagination"]}%%%%%%%%%%%%%"
-  parse_page(current_page)
-end
+#
+#
+# 8.downto(1) do |count|
+#   current_page = RestClient.get("https://api.discogs.com/labels/40046/releases?page=#{count}&token=QjkhoqmubxdAFOTXhcXCnhdQzozszdFQOjFVltZN")
+#   puts "%%%%%%%#{count}#{JSON.parse(current_page)["pagination"]}%%%%%%%%%%%%%"
+#   parse_page(current_page)
+# end
+#
+# 21.downto(1) do |count|
+#   current_page = RestClient.get("https://api.discogs.com/labels/245711/releases?page=#{count}&token=QjkhoqmubxdAFOTXhcXCnhdQzozszdFQOjFVltZN")
+#   puts "%%%%%%%#{count}#{JSON.parse(current_page)["pagination"]}%%%%%%%%%%%%%"
+#   parse_page(current_page)
+# end
+#
+# 18.downto(1) do |count|
+#   current_page = RestClient.get("https://api.discogs.com/labels/33263/releases?page=#{count}&token=QjkhoqmubxdAFOTXhcXCnhdQzozszdFQOjFVltZN")
+#   puts "%%%%%%%#{count}#{JSON.parse(current_page)["pagination"]}%%%%%%%%%%%%%"
+#   parse_page(current_page)
+# end
+#
+# 50.downto(1) do |count|
+#   current_page = RestClient.get("https://api.discogs.com/labels/33329/releases?page=#{count}&token=QjkhoqmubxdAFOTXhcXCnhdQzozszdFQOjFVltZN")
+#   puts "%%%%%%%#{count}#{JSON.parse(current_page)["pagination"]}%%%%%%%%%%%%%"
+#   parse_page(current_page)
+# end
+
+# 17.downto(1) do |count|
+#   current_page = RestClient.get("https://api.discogs.com/labels/61599/releases?page=#{count}&token=QjkhoqmubxdAFOTXhcXCnhdQzozszdFQOjFVltZN")
+#   puts "%%%%%%%#{count}#{JSON.parse(current_page)["pagination"]}%%%%%%%%%%%%%"
+#   parse_page(current_page)
+# end
+#
+# 116.downto(1) do |count|
+#   current_page = RestClient.get("https://api.discogs.com/labels/634/releases?page=#{count}&token=QjkhoqmubxdAFOTXhcXCnhdQzozszdFQOjFVltZN")
+#   puts "%%%%%%%#{count}#{JSON.parse(current_page)["pagination"]}%%%%%%%%%%%%%"
+#   parse_page(current_page)
+# end
+#
+#
+# 9.downto(1) do |count|
+#   current_page = RestClient.get("https://api.discogs.com/labels/1610/releases?page=#{count}&token=QjkhoqmubxdAFOTXhcXCnhdQzozszdFQOjFVltZN")
+#   puts "%%%%%%%#{count}#{JSON.parse(current_page)["pagination"]}%%%%%%%%%%%%%"
+#   parse_page(current_page)
+# end
+
+# 638.downto(1) do |count|
+#   current_page = RestClient.get("https://api.discogs.com/labels/681/releases?page=#{count}&token=QjkhoqmubxdAFOTXhcXCnhdQzozszdFQOjFVltZN")
+#   puts "%%%%%%%#{count}#{JSON.parse(current_page)["pagination"]}%%%%%%%%%%%%%"
+#   parse_page(current_page)
+# end
+
+# 140.downto(10) do |count|
+#   current_page = RestClient.get("https://api.discogs.com/labels/238322/releases?page=#{count}&token=QjkhoqmubxdAFOTXhcXCnhdQzozszdFQOjFVltZN")
+#   puts "%%%%%%%#{count}#{JSON.parse(current_page)["pagination"]}%%%%%%%%%%%%%"
+#   parse_page(current_page)
+# end
 
 
-2452.downto(1200) do |count|
+2427.downto(1200) do |count|
   current_page = RestClient.get("https://api.discogs.com/labels/26126/releases?page=#{count}&token=QjkhoqmubxdAFOTXhcXCnhdQzozszdFQOjFVltZN")
   puts "%%%%%%%#{count}#{JSON.parse(current_page)["pagination"]}%%%%%%%%%%%%%"
   parse_page(current_page)
