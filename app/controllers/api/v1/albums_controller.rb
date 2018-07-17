@@ -7,7 +7,7 @@
 
       order = "DESC" if sort == "rating"
       order = "DESC" if sort == "likes"
-      order = "ASC" if sort == "year"
+      order = "DESC" if sort == "year"
       puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%#{offset}"
       # byebug
       render json: Album.order("#{sort} #{order}").limit(limit).offset(offset*limit)
